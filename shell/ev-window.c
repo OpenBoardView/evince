@@ -7466,6 +7466,32 @@ handle_sync_view_cb (EvEvinceWindow        *object,
 
 	return TRUE;
 }
+
+static gboolean
+handle_search_cb (EvEvinceWindow        *object,
+		     GDBusMethodInvocation *invocation,
+		     const gchar           *search_string,
+		     EvWindow              *window)
+{
+	EvWindowPrivate *priv = GET_PRIVATE (window);
+	GtkSearchEntry *entry = ev_search_box_get_entry (EV_SEARCH_BOX (priv->search_box));
+	const gchar *previous_search_string = gtk_entry_get_text (GTK_ENTRY (entry));
+
+        if (search_string != NULL) {
+		if (g_strcmp0(search_string, previous_search_string) != 0) { // New search string
+			gtk_entry_set_text (GTK_ENTRY (entry), search_string);
+		} else { // Old search string, go to next result
+			ev_view_find_next (EV_VIEW (priv->view));
+			ev_find_sidebar_next (EV_FIND_SIDEBAR (priv->find_sidebar));
+		}
+	}
+
+	ev_window_show_find_bar (window, TRUE);
+
+	ev_evince_window_complete_search (object, invocation);
+
+	return TRUE;
+}
 #endif /* ENABLE_DBUS */
 
 static gboolean
@@ -7553,6 +7579,9 @@ ev_window_init (EvWindow *ev_window)
                         priv->skeleton = skeleton;
 			g_signal_connect (skeleton, "handle-sync-view",
 					  G_CALLBACK (handle_sync_view_cb),
+					  ev_window);
+			g_signal_connect (skeleton, "handle-search",
+					  G_CALLBACK (handle_search_cb),
 					  ev_window);
                 } else {
                         g_printerr ("Failed to register bus object %s: %s\n",
