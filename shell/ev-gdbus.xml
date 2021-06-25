@@ -28,5 +28,8 @@
     <signal name='DocumentLoaded'>
       <arg type='s' name='uri' direction='out'/>
     </signal>
+    <method name='Search'>
+      <arg type='s' name='search_string' direction='in'/>
+    </method>
   </interface>
 </node>
