@@ -50,5 +50,6 @@ GtkWidget      *ev_search_box_new         (EvDocumentModel *model);
 GtkSearchEntry *ev_search_box_get_entry   (EvSearchBox     *box);
 gboolean        ev_search_box_has_results (EvSearchBox     *box);
 void            ev_search_box_restart     (EvSearchBox     *box);
+void            ev_search_box_set_options (EvSearchBox     *box, EvFindOptions options);
 
 G_END_DECLS
