@@ -30,6 +30,8 @@
     </signal>
     <method name='Search'>
       <arg type='s' name='search_string' direction='in'/>
+      <arg type='b' name='whole_words_only' direction='in'/>
+      <arg type='b' name='case_sensitive' direction='in'/>
     </method>
   </interface>
 </node>
