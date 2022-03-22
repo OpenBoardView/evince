@@ -266,7 +266,7 @@ document_changed_cb (EvDocumentModel *model,
         ev_search_box_setup_document (box, ev_document_model_get_document (model));
 }
 
-static void
+void
 ev_search_box_set_options (EvSearchBox  *box,
                            EvFindOptions options)
 {
