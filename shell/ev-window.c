@@ -7471,11 +7471,16 @@ static gboolean
 handle_search_cb (EvEvinceWindow        *object,
 		     GDBusMethodInvocation *invocation,
 		     const gchar           *search_string,
+		     gboolean              whole_words_only,
+		     gboolean              case_sensitive,
 		     EvWindow              *window)
 {
 	EvWindowPrivate *priv = GET_PRIVATE (window);
 	GtkSearchEntry *entry = ev_search_box_get_entry (EV_SEARCH_BOX (priv->search_box));
 	const gchar *previous_search_string = gtk_entry_get_text (GTK_ENTRY (entry));
+
+	EvFindOptions options = (whole_words_only ? EV_FIND_WHOLE_WORDS_ONLY : 0) | (case_sensitive ? EV_FIND_CASE_SENSITIVE : 0);
+	ev_search_box_set_options (EV_SEARCH_BOX (priv->search_box), options);
 
         if (search_string != NULL) {
 		if (g_strcmp0(search_string, previous_search_string) != 0) { // New search string
