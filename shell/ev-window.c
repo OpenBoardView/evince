@@ -7443,6 +7443,25 @@ ev_window_emit_doc_loaded (EvWindow *window)
         ev_evince_window_emit_document_loaded (priv->skeleton, priv->uri);
 }
 
+static void
+ev_window_emit_selection_changed (EvWindow *window)
+{
+	EvWindowPrivate *priv = GET_PRIVATE (window);
+	gchar *selected_text = NULL;
+
+	if (priv->skeleton == NULL)
+		return;
+
+	selected_text = ev_view_get_selected_text (EV_VIEW (priv->view));
+
+	if (selected_text == NULL)
+		return;
+
+	ev_evince_window_emit_selection_changed (priv->skeleton, selected_text);
+
+	g_free (selected_text);
+}
+
 static gboolean
 handle_sync_view_cb (EvEvinceWindow        *object,
 		     GDBusMethodInvocation *invocation,
@@ -7883,6 +7902,9 @@ ev_window_init (EvWindow *ev_window)
 #ifdef ENABLE_DBUS
 	g_signal_connect_swapped (priv->view, "sync-source",
 				  G_CALLBACK (ev_window_sync_source),
+				  ev_window);
+	g_signal_connect_swapped (priv->view, "selection-changed",
+				  G_CALLBACK (ev_window_emit_selection_changed),
 				  ev_window);
 #endif
 	gtk_widget_show (priv->view);
