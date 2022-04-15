@@ -33,5 +33,8 @@
       <arg type='b' name='whole_words_only' direction='in'/>
       <arg type='b' name='case_sensitive' direction='in'/>
     </method>
+    <signal name='SelectionChanged'>
+      <arg type='s' name='selected_text' direction='out'/>
+    </signal>
   </interface>
 </node>
