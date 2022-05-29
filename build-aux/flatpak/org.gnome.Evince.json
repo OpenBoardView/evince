@@ -217,8 +217,8 @@
             "sources": [
                 {
                     "type": "git",
-                    "branch": "main",
-                    "url": "https://gitlab.gnome.org/GNOME/evince.git"
+                    "branch": "feat/dbus-search-flatpak",
+                    "url": "https://github.com/OpenBoardView/evince.git"
                 }
             ]
         }
