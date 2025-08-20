@@ -1,13 +1,10 @@
 {
     "app-id" : "org.gnome.Evince",
+    "branch" : "48.1",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "master",
+    "runtime-version" : "48",
     "sdk" : "org.gnome.Sdk",
     "command" : "evince",
-    "tags" : [
-        "devel"
-    ],
-    "desktop-file-name-prefix" : "(Development) ",
     "copy-icon" : true,
     "finish-args" : [
         "--share=ipc",
@@ -42,7 +39,8 @@
         "/share/gtk-doc",
         "/share/vala",
         "*.la",
-        "*.a"
+        "*.a",
+        "*.debug"
     ],
     "modules": [
         "python3-gi-docgen-dependencies.json",
@@ -216,7 +214,7 @@
                 "-Dgtk_doc=true",
                 "-Dintrospection=true",
                 "-Duser_doc=false",
-                "-Ddevelopment=true"
+                "-Ddevelopment=false"
             ],
             "sources": [
                 {
